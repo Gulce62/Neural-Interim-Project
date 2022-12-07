@@ -36,7 +36,6 @@ def forwardPass(We, data):
     b2 = We['b2']
 
     Z1 = np.dot(data.T, W1) + b1
-    print(Z1.shape)
     A1 = sigmoid(Z1)
     Z2 = np.dot(A1, W2) + b2
     A2 = sigmoid(Z2)
@@ -49,14 +48,18 @@ def lossMSE(oDesired, oNetwork, m):
     return MSE
 
 
-def lossTykhonovRegularization():
-    pass
+def lossTykhonovRegularization(lambdaVal, We):
+    regW1 = np.sum(np.square(We['W1']))
+    regW2 = np.sum(np.square(We['W2']))
+    TR = (lambdaVal/2) * (regW1 + regW2)
+    return TR
 
 
 def lossKL(beta, rho, A1):
     rho_b = A1.mean(axis=0, keepdims=True)
     KL1 = rho * np.log(rho/rho_b)
-    KL2 = (1-rho)
+    KL2 = (1-rho) * np.log((1-rho)/(1-rho_b))
+    KL = beta * np.sum(KL1 + KL2)
     return KL
 
 
@@ -77,6 +80,11 @@ def aeCost(We, data, params):
     MSE = lossMSE(data, A2.T, m)
     print(MSE)
     KL = lossKL(beta, rho, A1)
+    print(KL)
+    TR = lossTykhonovRegularization(lambdaVal, We)
+    print(TR)
+    loss = MSE + KL + TR
+    print(loss)
 
 
 class AutoEncoder:
