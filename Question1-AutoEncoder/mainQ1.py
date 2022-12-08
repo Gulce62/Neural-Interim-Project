@@ -17,7 +17,7 @@ def read_data(filePath):
         sys.exit(1)
 
 
-file = read_data(filePath='Question1-AutoEncoder/data1.h5')
+file = read_data(filePath='../Datasets/data1.h5')
 keys = list(file.keys())
 data = file[keys[0]][()]
 invXForm = file[keys[1]][()]

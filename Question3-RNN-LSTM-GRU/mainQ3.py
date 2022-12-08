@@ -14,6 +14,7 @@ def read_data(filePath):
         print('Invalid file path!!!')
         sys.exit(1)
 
-file = h5py.File('data3.h5', 'r')
+
+file = read_data(filePath='../Datasets/data3.h5')
 keys = list(file.keys())
 print(keys)
