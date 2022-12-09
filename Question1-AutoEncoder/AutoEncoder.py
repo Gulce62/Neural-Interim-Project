@@ -80,7 +80,7 @@ def KL(beta, rho, A1, condition):
     if condition == 'gradient':
         gradKL1 = -rho / rho_b
         gradKL2 = (1 - rho) / (1 - rho_b)
-        gradKL = beta * (gradKL1 + gradKL2)
+        gradKL = beta * (gradKL1 + gradKL2) * (1/A1.shape[1])
         return gradKL
 
 
@@ -146,12 +146,7 @@ def fit(data, parameters, epochNo, learningRate):
         We = updateParameters(We, J_grad, learningRate)
         J_list.append(J)
         print('The cost at epoch =', str(epoch), 'is:', str(J))
-    return We
-
-def predict(We, data):
-    cache = forwardPass(We, data)
-    y_pred = cache['A2']
-
+    return We, J_list
 
 class AutoEncoder:
     def __init__(self):

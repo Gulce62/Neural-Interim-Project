@@ -37,9 +37,9 @@ imageData = imageData.reshape(shapeData[0], shapeData[1] * shapeData[2])
 print('The shape of the flattened image data is:', imageData.shape)
 
 Lhid = 64
-lambdaVal = 5 * (10 ** -4)
-beta = 0.01
-rho = 0.1
+lambdaVal = 1e-5
+beta = 1e-1
+rho = 5e-1
 
 parameters = {'Lin': imageData.shape[1],
               'Lhid': Lhid,
@@ -47,5 +47,6 @@ parameters = {'Lin': imageData.shape[1],
               'beta': beta,
               'rho': rho}
 
-We = AE.fit(imageData, parameters, 100, 0.1)
-AE.predict(We, imageData)
+We, J_list = AE.fit(imageData, parameters, 5000, 7e-1)
+plt.plot(J_list)
+plt.show()
