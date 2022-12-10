@@ -30,7 +30,7 @@ imPP.convertGrayscale()
 imageData = imPP.normalize(3, (0.1, 0.9))
 print('The minimum value of the normalized dataset is:', imageData.min())
 print('The maximum value of the normalized dataset is:', imageData.max())
-imPP.displayImages()
+imPP.displayImages(data, imageData, 200)
 
 shapeData = imageData.shape
 imageData = imageData.reshape(shapeData[0], shapeData[1] * shapeData[2])
@@ -38,15 +38,53 @@ print('The shape of the flattened image data is:', imageData.shape)
 
 Lhid = 64
 lambdaVal = 1e-5
-beta = 1e-1
-rho = 5e-1
+betaList = [1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1]
+rhoList = [1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1]
+epochNo = 1000
+learningRate = 7e-1
 
-parameters = {'Lin': imageData.shape[1],
-              'Lhid': Lhid,
-              'lambda': lambdaVal,
-              'beta': beta,
-              'rho': rho}
+J_list = []
+We = AE.initializeWeights(imageData.shape[1], Lhid)
+for beta in betaList:
+    tempJ_list = []
+    for rho in rhoList:
+        parameters = {'lambda': lambdaVal,
+                      'beta': beta,
+                      'rho': rho}
+        J, J_grad = AE.aeCost(We, imageData, parameters)
+        tempJ_list.append(J)
+    J_list.append(tempJ_list)
+minIndex = np.argwhere(J_list == np.min(J_list)).ravel()
 
-We, J_list = AE.fit(imageData, parameters, 5000, 7e-1)
+bestBeta = betaList[minIndex[0]]
+bestRho = rhoList[minIndex[1]]
+parameters = {'lambda': lambdaVal,
+              'beta': bestBeta,
+              'rho': bestRho}
+
+modelAE = AE.AutoEncoder(We, parameters, epochNo, learningRate)
+We, J_list = modelAE.solver(imageData)
+plt.figure()
+plt.title('Loss Value at Each Epoch')
+plt.xlabel('Epoch Number')
+plt.ylabel('Loss')
 plt.plot(J_list)
-plt.show()
+modelAE.displayHiddenWeights()
+
+LhidList = [10, 55, 100]
+lambdaValList = [1e-5, 1e-3, 0]
+
+for hidSize in LhidList:
+    for lam in lambdaValList:
+        We = AE.initializeWeights(imageData.shape[1], hidSize)
+        parameters = {'lambda': lam,
+                      'beta': bestBeta,
+                      'rho': bestRho}
+        modelAE = AE.AutoEncoder(We, parameters, epochNo, learningRate)
+        We, J_list = modelAE.solver(imageData)
+        plt.figure()
+        plt.title('Loss Value at Each Epoch')
+        plt.xlabel('Epoch Number')
+        plt.ylabel('Loss')
+        plt.plot(J_list)
+        modelAE.displayHiddenWeights()

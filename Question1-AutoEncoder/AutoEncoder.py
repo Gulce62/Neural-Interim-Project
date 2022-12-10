@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def initialization(Lpre, Lpost):
@@ -138,16 +139,36 @@ def updateParameters(We, J_grad, learningRate):
     return We
 
 
-def fit(data, parameters, epochNo, learningRate):
-    We = initializeWeights(parameters['Lin'], parameters['Lhid'])
-    J_list = []
-    for epoch in range(epochNo):
-        J, J_grad = aeCost(We, data, parameters)
-        We = updateParameters(We, J_grad, learningRate)
-        J_list.append(J)
-        print('The cost at epoch =', str(epoch), 'is:', str(J))
-    return We, J_list
+
 
 class AutoEncoder:
-    def __init__(self):
+    def __init__(self, We, parameters, epochNo, learningRate):
+        self.We = We
+        self.parameters = parameters
+        self.epochNo = epochNo
+        self.learningRate = learningRate
+
+    def solver(self, data):
+        J_list = []
+        for epoch in range(self.epochNo):
+            J, J_grad = aeCost(self.We, data, self.parameters)
+            self.We = updateParameters(self.We, J_grad, self.learningRate)
+            # self.learningRate *= 0.9999
+            J_list.append(J)
+            print('The cost at epoch =', str(epoch), 'is:', str(J))
+        return self.We, J_list
+
+    def reconstruct(self, data):
+        cache = forwardPass(self.We, data)
         pass
+
+    def displayHiddenWeights(self):
+        W1 = self.We['W1']
+        plt.figure(figsize=(9, 8))
+        plt.suptitle('Hidden Layer Features')
+        for w in range(W1.shape[1]):
+            plt.subplot(8, 8, w + 1)
+            plt.imshow(W1.T[w].reshape(16, 16), cmap='gray')
+            plt.axis('off')
+        plt.show()
+
