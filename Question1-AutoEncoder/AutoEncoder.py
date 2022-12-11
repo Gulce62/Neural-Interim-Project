@@ -158,10 +158,6 @@ class AutoEncoder:
             print('The cost at epoch =', str(epoch), 'is:', str(J))
         return self.We, J_list
 
-    def reconstruct(self, data):
-        cache = forwardPass(self.We, data)
-        pass
-
     def displayHiddenWeights(self):
         W1 = self.We['W1']
         plt.figure(figsize=(9, 8))
@@ -171,4 +167,28 @@ class AutoEncoder:
             plt.imshow(W1.T[w].reshape(16, 16), cmap='gray')
             plt.axis('off')
         plt.show()
+
+
+    def reconstruct(self, data, imageNumber):
+        cache = forwardPass(self.We, data)
+        reconstructedImages = cache['A2']
+
+        np.random.seed(0)
+        indices = np.random.randint(data.shape[0], size=imageNumber)
+
+        plt.figure(figsize=(12, 4))
+        for image in range(imageNumber):
+            plt.subplot(2, imageNumber, image + 1)
+            plt.title("Reconstructed Image")
+            plt.imshow(reconstructedImages[indices[image]].reshape(16, 16), cmap='gray')
+            plt.axis('off')
+
+            plt.subplot(2, imageNumber, image + 1 + imageNumber)
+            plt.title("Original Image")
+            plt.imshow(data[indices[image]].reshape(16, 16), cmap='gray')
+            plt.axis('off')
+        plt.show()
+
+
+
 

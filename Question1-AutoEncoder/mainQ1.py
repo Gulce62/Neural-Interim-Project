@@ -40,7 +40,7 @@ Lhid = 64
 lambdaVal = 1e-5
 betaList = [1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1]
 rhoList = [1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1]
-epochNo = 1000
+epochNo = 3000
 learningRate = 7e-1
 
 J_list = []
@@ -58,6 +58,8 @@ minIndex = np.argwhere(J_list == np.min(J_list)).ravel()
 
 bestBeta = betaList[minIndex[0]]
 bestRho = rhoList[minIndex[1]]
+print('Chosen beta value is:', bestBeta)
+print('Chosen rho value is:', bestRho)
 parameters = {'lambda': lambdaVal,
               'beta': bestBeta,
               'rho': bestRho}
@@ -73,7 +75,7 @@ modelAE.displayHiddenWeights()
 
 LhidList = [10, 55, 100]
 lambdaValList = [1e-5, 1e-3, 0]
-
+"""
 for hidSize in LhidList:
     for lam in lambdaValList:
         We = AE.initializeWeights(imageData.shape[1], hidSize)
@@ -87,4 +89,5 @@ for hidSize in LhidList:
         plt.xlabel('Epoch Number')
         plt.ylabel('Loss')
         plt.plot(J_list)
-        modelAE.displayHiddenWeights()
+        modelAE.displayHiddenWeights()"""
+modelAE.reconstruct(imageData, 16)
