@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../../CS 464/Homeworks/HW2/LogisticRegression/.idea/LogisticRegression.iml" filepath="$PROJECT_DIR$/../../../CS 464/Homeworks/HW2/LogisticRegression/.idea/LogisticRegression.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Neural-Interim-Project.iml" filepath="$PROJECT_DIR$/.idea/Neural-Interim-Project.iml" />
     </modules>
   </component>

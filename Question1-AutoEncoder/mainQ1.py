@@ -75,7 +75,7 @@ modelAE.displayHiddenWeights()
 
 LhidList = [10, 55, 100]
 lambdaValList = [1e-5, 1e-3, 0]
-"""
+
 for hidSize in LhidList:
     for lam in lambdaValList:
         We = AE.initializeWeights(imageData.shape[1], hidSize)
@@ -89,5 +89,6 @@ for hidSize in LhidList:
         plt.xlabel('Epoch Number')
         plt.ylabel('Loss')
         plt.plot(J_list)
-        modelAE.displayHiddenWeights()"""
-modelAE.reconstruct(imageData, 16)
+        modelAE.displayHiddenWeights()
+
+modelAE.reconstruct(imageData, imageNumber=15)

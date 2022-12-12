@@ -2,8 +2,8 @@ import numpy as np
 
 
 def gaussianInitialization(dimension):
-    np.random.seed(8)
-    p = np.random.normal(loc=0, scale=0.1, size=dimension)
+    np.random.seed(0)
+    p = np.random.normal(loc=0, scale=0.01, size=dimension)
     return p
 
 
@@ -30,11 +30,9 @@ def sigmoid(z, condition):
         return sig * (1 - sig)
 
 
-# TODO look for softmax function and its derivative
-
 def softmax(z, condition):
-    exp = np.exp(z - np.max(z))
-    sm = exp / np.sum(exp)
+    exp = np.exp(z - np.max(z, axis=-1, keepdims=True))
+    sm = exp / np.sum(exp, axis=1, keepdims=True)
     if condition == 'forward':
         return sm
     if condition == 'gradient':
@@ -49,9 +47,9 @@ def forwardPass(X, weights):
     b2 = weights['b2']
 
     emb = np.dot(X, WE)
-    Z1 = np.dot(emb, W1) + b1
+    Z1 = np.dot(emb, W1) - b1
     A1 = sigmoid(Z1, 'forward')
-    Z2 = np.dot(A1, W2) + b2
+    Z2 = np.dot(A1, W2) - b2
     A2 = softmax(Z2, 'forward')
 
     cache = {'emb': emb,
@@ -65,10 +63,10 @@ def forwardPass(X, weights):
 def crossEntropy(A2, y, condition):
     m = y.shape[0]
     if condition == 'loss':
-        lossCE = np.sum(-y * np.log(A2)) / m
+        lossCE = -np.sum(y * np.log(A2)) / m
         return lossCE
     if condition == 'gradient':
-        gradCE = -y / A2
+        gradCE = A2 - y  # TODO look for the gradient of cross entropy
         return gradCE
 
 
@@ -81,7 +79,7 @@ def backwardPass(X, y, weights, cache):
     Z2 = cache['Z2']
     A2 = cache['A2']
 
-    dZ2 = crossEntropy(A2, y, 'gradient') * softmax(Z2, 'gradient')
+    dZ2 = crossEntropy(A2, y, 'gradient')
     dW2 = (1 / m) * (np.dot(A1.T, dZ2))
     db2 = (1 / m) * np.sum(dZ2, axis=0, keepdims=True)
 
@@ -100,36 +98,72 @@ def backwardPass(X, y, weights, cache):
     return grads
 
 
-def nlpCost(X, weights, y):
-    cache = forwardPass(X, weights)
-    J = crossEntropy(cache['A2'], y, 'loss')
-    J_grad = backwardPass(X, y, weights, cache)
-    return J, J_grad
+def updateParameters(weights, prevWeights, J_grad, learningRate, momentumRate):  # TODO add momentum
+    dWE = learningRate * J_grad['dWE'] + momentumRate * prevWeights['dWE_prev']
+    dW1 = learningRate * J_grad['dW1'] + momentumRate * prevWeights['dW1_prev']
+    dW2 = learningRate * J_grad['dW2'] + momentumRate * prevWeights['dW2_prev']
+    db1 = learningRate * J_grad['db1'] + momentumRate * prevWeights['db1_prev']
+    db2 = learningRate * J_grad['db2'] + momentumRate * prevWeights['db2_prev']
 
-def predict(X, y, weights):
-    cache = forwardPass(X, weights)
-    y_pred = cache['A2']
-    print(y_pred[0])
-    print(y[0])
-    print(np.where(y[2]==1))
-    print(y_pred[2].argsort()[-50:][::-1])
-    print(-y_pred[2].argsort()[:50])
+    weights['WE'] -= dWE
+    weights['W1'] -= dW1
+    weights['W2'] -= dW2
+    weights['b1'] -= db1
+    weights['b2'] -= db2
+
+    prevWeights['dWE_prev'] = dWE
+    prevWeights['dW1_prev'] = dW1
+    prevWeights['dW2_prev'] = dW2
+    prevWeights['db1_prev'] = db1
+    prevWeights['db2_prev'] = db2
+
+    return weights, prevWeights
+
 
 class NLP:
-    def __init__(self, weights, parameters, layerSizes):
-        self.WE = weights['WE']
-        self.W1 = weights['W1']
-        self.W2 = weights['W2']
-        self.b1 = weights['b1']
-        self.b2 = weights['b2']
-
+    def __init__(self, parameters, layerSizes):
         self.batchSize = parameters['batchSize']
         self.learningRate = parameters['learningRate']
         self.momentumRate = parameters['momentumRate']
         self.epochNo = parameters['epochNo']
 
-        self.featureSize = layerSizes['featureSize']
-        self.inputSize = layerSizes['inputSize']
-        self.embedSize = layerSizes['embedSize']
-        self.hiddenSize = layerSizes['hiddenSize']
-        self.outputSize = layerSizes['outputSize']
+        self.layerSizes = layerSizes
+        self.weights = None
+        self.prevWeights = {'dWE_prev': 0,
+                            'dW1_prev': 0,
+                            'dW2_prev': 0,
+                            'db1_prev': 0,
+                            'db2_prev': 0}
+
+    def fit(self, X_train, y_train, layerSizes):
+        self.weights = initializeWeights(layerSizes)
+
+        m = layerSizes['inputSize']
+        if m % self.batchSize == 0:
+            iterationNo = m // self.batchSize
+        else:
+            iterationNo = m // self.batchSize + 1
+
+        for epoch in range(self.epochNo):
+            J = 0
+            for batch in range(iterationNo):
+                startIdx = batch * self.batchSize
+                endIdx = startIdx + self.batchSize
+                if batch == iterationNo - 1:
+                    X_batch = X_train[startIdx:]
+                    y_batch = y_train[startIdx:]
+                else:
+                    X_batch = X_train[startIdx:endIdx]
+                    y_batch = y_train[startIdx:endIdx]
+                cache = forwardPass(X_batch, self.weights)
+                J += crossEntropy(cache['A2'], y_batch, 'loss')
+                J_grad = backwardPass(X_batch, y_batch, self.weights, cache)
+                self.weights, self.prevWeights = updateParameters(self.weights, self.prevWeights, J_grad,
+                                                                  self.learningRate, self.momentumRate)
+            print('Loss for epoch', epoch, 'is:', J / iterationNo)
+
+    def predict(self, X):
+        cache = forwardPass(X, self.weights)
+        y_pred = cache['A2']
+        pred_index = np.argmax(y_pred, axis=1)
+        return pred_index

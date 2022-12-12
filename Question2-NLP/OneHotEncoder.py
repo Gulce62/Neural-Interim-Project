@@ -9,7 +9,7 @@ class OneHotEncoder:
         OHEVector = np.zeros((data.shape[0], data.shape[1], self.wordSize))
         for feature in range(data.shape[1]):
             indices = (data[..., feature] - 1)
-            for sample in indices:
+            for sample in range(indices.shape[0]):
                 OHEVector[sample, feature, indices[sample]] = 1
         return OHEVector
 

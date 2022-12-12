@@ -81,7 +81,7 @@ def KL(beta, rho, A1, condition):
     if condition == 'gradient':
         gradKL1 = -rho / rho_b
         gradKL2 = (1 - rho) / (1 - rho_b)
-        gradKL = beta * (gradKL1 + gradKL2) * (1/A1.shape[1])
+        gradKL = beta * (gradKL1 + gradKL2) * (1 / A1.shape[1])
         return gradKL
 
 
@@ -139,8 +139,6 @@ def updateParameters(We, J_grad, learningRate):
     return We
 
 
-
-
 class AutoEncoder:
     def __init__(self, We, parameters, epochNo, learningRate):
         self.We = We
@@ -168,7 +166,6 @@ class AutoEncoder:
             plt.axis('off')
         plt.show()
 
-
     def reconstruct(self, data, imageNumber):
         cache = forwardPass(self.We, data)
         reconstructedImages = cache['A2']
@@ -176,19 +173,19 @@ class AutoEncoder:
         np.random.seed(0)
         indices = np.random.randint(data.shape[0], size=imageNumber)
 
-        plt.figure(figsize=(12, 4))
+        plt.figure(figsize=(16, 12))
         for image in range(imageNumber):
-            plt.subplot(2, imageNumber, image + 1)
+            if imageNumber % 5 == 0:
+                pos = imageNumber // 5
+            else:
+                pos = imageNumber // 5 + 1
+            plt.subplot(2 * pos, 5, image + 1)
             plt.title("Reconstructed Image")
             plt.imshow(reconstructedImages[indices[image]].reshape(16, 16), cmap='gray')
             plt.axis('off')
 
-            plt.subplot(2, imageNumber, image + 1 + imageNumber)
+            plt.subplot(2 * pos, 5, image + 1 + (5 * pos))
             plt.title("Original Image")
             plt.imshow(data[indices[image]].reshape(16, 16), cmap='gray')
             plt.axis('off')
         plt.show()
-
-
-
-
