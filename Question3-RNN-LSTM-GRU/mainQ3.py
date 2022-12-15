@@ -47,7 +47,7 @@ parameters = {'batchSize': 32,
               'learningRate': 0.1,
               'momentumRate': 0.85,
               'epochNo': 50,
-              'threshold': 0.1}
+              'threshold': 15}
 
 layerSizes = {'sampleSize': X_train.shape[0],
               'timeStepSize': X_train.shape[1],

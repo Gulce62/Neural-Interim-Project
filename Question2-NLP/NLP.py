@@ -76,7 +76,6 @@ def backwardPass(X, y, weights, cache):
     emb = cache['emb']
     Z1 = cache['Z1']
     A1 = cache['A1']
-    Z2 = cache['Z2']
     A2 = cache['A2']
 
     dZ2 = crossEntropy(A2, y, 'gradient')
@@ -146,7 +145,6 @@ class NLP:
             iterationNo = m // self.batchSize + 1
 
         for epoch in range(self.epochNo):
-            J = 0
             train_acc = []
             val_acc = []
             for batch in range(iterationNo):
@@ -159,7 +157,6 @@ class NLP:
                     X_batch = X_train[startIdx:endIdx]
                     y_batch = y_train[startIdx:endIdx]
                 cache = forwardPass(X_batch, self.weights)
-                J += crossEntropy(cache['A2'], y_batch, 'loss')
                 J_grad = backwardPass(X_batch, y_batch, self.weights, cache)
                 self.weights, self.prevWeights = updateParameters(self.weights, self.prevWeights, J_grad,
                                                                   self.learningRate, self.momentumRate)
