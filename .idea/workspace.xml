@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d71309f-fb29-4645-a3ec-1571dac58819" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/RNN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Neural-Interim-Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Neural-Interim-Project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Question1-AutoEncoder/AutoEncoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question1-AutoEncoder/AutoEncoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Question1-AutoEncoder/mainQ1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question1-AutoEncoder/mainQ1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Question2-NLP/NLP.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question2-NLP/NLP.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Question2-NLP/OneHotEncoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question2-NLP/OneHotEncoder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Question2-NLP/mainQ2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question2-NLP/mainQ2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,16 +43,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/gulce/Desktop/EEE 8TH SEMESTER/CS 464/Homeworks/HW2/LogisticRegression",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/gulce/Desktop/EEE 8TH SEMESTER/CS 464/Homeworks/HW2/LogisticRegression&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\gulce\Desktop\EEE 8TH SEMESTER\EEE 443\Interim Project\Neural-Interim-Project\Question2-NLP" />
@@ -64,7 +62,7 @@
       <recent name="C:\Users\gulce\Desktop\EEE 8TH SEMESTER\EEE 443\Interim Project\Neural-Interim-Project\Question2-NLP\extra" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.mainQ2">
+  <component name="RunManager" selected="Python.mainQ3">
     <configuration name="extra" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Neural-Interim-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -73,12 +71,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Question1-AutoEncoder" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Question1-AutoEncoder/extra.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/extra.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -155,10 +153,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.mainQ3" />
+        <item itemvalue="Python.extra" />
         <item itemvalue="Python.mainQ2" />
         <item itemvalue="Python.mainQ1" />
-        <item itemvalue="Python.extra" />
-        <item itemvalue="Python.mainQ3" />
       </list>
     </recent_temporary>
   </component>
@@ -183,6 +181,14 @@
       <workItem from="1670758401476" duration="8000" />
       <workItem from="1670782287566" duration="6836000" />
       <workItem from="1670858549348" duration="22225000" />
+      <workItem from="1670926828162" duration="3085000" />
+      <workItem from="1670930984377" duration="762000" />
+      <workItem from="1670945186203" duration="6188000" />
+      <workItem from="1670953900198" duration="19000" />
+      <workItem from="1671021942390" duration="8000" />
+      <workItem from="1671022649255" duration="5840000" />
+      <workItem from="1671042816584" duration="8000" />
+      <workItem from="1671103711638" duration="15531000" />
     </task>
     <servers />
   </component>
@@ -201,9 +207,9 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ3.coverage" NAME="mainQ3 Coverage Results" MODIFIED="1670512505880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ3.coverage" NAME="mainQ3 Coverage Results" MODIFIED="1671127467407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
     <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ1.coverage" NAME="mainQ1 Coverage Results" MODIFIED="1670793329552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question1-AutoEncoder" />
-    <SUITE FILE_PATH="coverage/Neural_Interim_Project$extra.coverage" NAME="extra Coverage Results" MODIFIED="1670792238627" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question1-AutoEncoder" />
-    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ2.coverage" NAME="mainQ2 Coverage Results" MODIFIED="1670885319864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question2-NLP" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$extra.coverage" NAME="extra Coverage Results" MODIFIED="1671108772024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ2.coverage" NAME="mainQ2 Coverage Results" MODIFIED="1671107524005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question2-NLP" />
   </component>
 </project>

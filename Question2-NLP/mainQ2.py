@@ -4,8 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import NLP as nlp
 import OneHotEncoder as ohe
+import time
 
-
+t1 = time.time()
 def read_data(filePath):
     # Read the data with its path location
     try:
@@ -15,12 +16,6 @@ def read_data(filePath):
     except Exception:
         print('Invalid file path!!!')
         sys.exit(1)
-
-
-def getAccuracy(y_true, y_pred):
-    accuracyBool = (y_true.ravel() == y_pred.ravel())
-    accuracy = np.count_nonzero(accuracyBool) / accuracyBool.shape[0]
-    return accuracy
 
 
 file = read_data(filePath='../Datasets/data2.h5')
@@ -58,27 +53,39 @@ print('The shape of one-hot encoded validation input is:', X_valOHE.shape)
 print('The shape of one-hot encoded test input is:', X_testOHE.shape)
 print('The shape of one-hot encoded train output is:', y_trainOHE.shape)
 print('The shape of one-hot encoded validation output is:', y_valOHE.shape)
-print('The shape of one-hot encoded test output is:', y_testOHE.shape)
+print('The shape of one-hot encoded test output is:', y_testOHE.shape, '\n')
 
 D = [32, 16, 8]
 P = [256, 128, 64]
+#D = [32]
+#P = [256]
 
 parameters = {'batchSize': 200,
               'learningRate': 0.15,
               'momentumRate': 0.85,
-              'epochNo': 10}
+              'epochNo': 50,
+              'threshold': 0.1}
 
 for d in D:
     for p in P:
         layerSizes = {'featureSize': X_train.shape[1] * words.shape[0],
-                      'inputSize': X_train.shape[0],
+                      'sampleSize': X_train.shape[0],
                       'embedSize': d,
                       'hiddenSize': p,
                       'outputSize': words.shape[0]}
 
         nlpModel = nlp.NLP(parameters, layerSizes)
-        nlpModel.fit(X_trainOHE, y_trainOHE, layerSizes)
-        y_pred = nlpModel.predict(X_trainOHE)
-        y_true = np.argmax(y_trainOHE, axis=1)
-        accuracy = getAccuracy(y_true, y_pred)
-        print('Accuracy for d=', d, 'p=', p, 'is:', accuracy)
+        train_acc, val_acc = nlpModel.fit(X_trainOHE, y_trainOHE, X_valOHE, y_valOHE, layerSizes)
+        plt.figure()
+        plt.title('Train accuracy for d = '+str(d)+' p = '+str(p))
+        plt.plot(train_acc)
+        plt.figure()
+        plt.title('Validation accuracy for d = ' + str(d) + ' p = ' + str(p))
+        plt.plot(val_acc)
+        plt.show()
+
+        t2 = time.time()
+        print(t2-t1)
+
+t3 = time.time()
+print(t3-t1)

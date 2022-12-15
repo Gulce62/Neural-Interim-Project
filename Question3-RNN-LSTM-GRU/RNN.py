@@ -1,33 +1,34 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
-def gaussianInitialization(dimension):
-    np.random.seed(0)
-    p = np.random.normal(loc=0, scale=0.01, size=dimension)
-    return p
+def initialization(Lpre, Lpost):
+    np.random.seed(0)  # TODO look for different seed values
+    wo = np.sqrt(6 / (Lpre + Lpost))
+    parameter = np.random.uniform(-wo, wo, size=(Lpre, Lpost))
+    return parameter
 
 
-def initializeWeights(layerSizes):
-    WE = gaussianInitialization((layerSizes['featureSize'], layerSizes['embedSize']))
-    W1 = gaussianInitialization((layerSizes['embedSize'], layerSizes['hiddenSize']))
-    W2 = gaussianInitialization((layerSizes['hiddenSize'], layerSizes['outputSize']))
-    b1 = gaussianInitialization((1, layerSizes['hiddenSize']))
-    b2 = gaussianInitialization((1, layerSizes['outputSize']))
+def initializeWeights(layersizes):
+    W1 = initialization(layersizes['featureSize'], layersizes['hiddenSize'])
+    WR = initialization(layersizes['hiddenSize'], layersizes['hiddenSize'])
+    W2 = initialization(layersizes['hiddenSize'], layersizes['outputSize'])
+    b1 = initialization(1, layersizes['hiddenSize'])
+    b2 = initialization(1, layersizes['outputSize'])
+    We = {'W1': W1,
+          'W2': W2,
+          'WR': WR,
+          'b1': b1,
+          'b2': b2}
+    return We
 
-    weights = {'WE': WE,
-               'W1': W1,
-               'W2': W2,
-               'b1': b1,
-               'b2': b2}
-    return weights
 
-
-def sigmoid(z, condition):
-    sig = 1 / (1 + np.exp(-z))
+def tanh(z, condition):
+    tanh = np.tanh(z)
     if condition == 'forward':
-        return sig
+        return tanh
     if condition == 'gradient':
-        return sig * (1 - sig)
+        return 1-(tanh**2)
 
 
 def softmax(z, condition):
@@ -39,25 +40,46 @@ def softmax(z, condition):
         return sm * (1 - sm)
 
 
-def forwardPass(X, weights):
-    WE = weights['WE']
+def forwardPassCell(X_timeStep, A1_prev, weights):
     W1 = weights['W1']
+    WR = weights['WR']
     W2 = weights['W2']
     b1 = weights['b1']
     b2 = weights['b2']
 
-    emb = np.dot(X, WE)
-    Z1 = np.dot(emb, W1) - b1
-    A1 = sigmoid(Z1, 'forward')
-    Z2 = np.dot(A1, W2) - b2
+    Z1_next = np.dot(X_timeStep, W1) + np.dot(A1_prev, WR) - b1
+    A1_next = tanh(Z1_next, 'forward')
+    Z2 = np.dot(A1_next, W2) - b2
     A2 = softmax(Z2, 'forward')
 
-    cache = {'emb': emb,
-             'Z1': Z1,
-             'A1': A1,
-             'Z2': Z2,
-             'A2': A2}
-    return cache
+    cache = {'X_timeStep': X_timeStep,
+             'A1_next': A1_next,
+             'A1_prev': A1_prev}
+    return A1_next, A2, cache
+
+
+def forwardPass(X, A1_0, weights, layerSizes):
+    sampleSize = layerSizes['sampleSize']
+    timeStepSize = layerSizes['timeStepSize']
+    hiddenSize = layerSizes['hiddenSize']
+    outputSize = layerSizes['outputSize']
+
+    cacheList = []
+    hiddenUnits = np.zeros((sampleSize, timeStepSize, hiddenSize))
+    outputUnits = np.zeros((sampleSize, timeStepSize, outputSize))
+
+    A1_next = A1_0
+    for timeStep in range(timeStepSize):
+        currentTimeSample = X[:, timeStep, :]
+        A1_next, A2, cache = forwardPassCell(currentTimeSample, A1_next, weights)
+        hiddenUnits[:, timeStep, :] = A1_next
+        outputUnits[:, timeStep, :] = A2
+        cacheList.append(cache)
+
+    caches = {'cacheList': cacheList,
+              'X': X,
+              'y': A2}
+    return hiddenUnits, outputUnits, caches
 
 
 def crossEntropy(A2, y, condition):
@@ -70,57 +92,15 @@ def crossEntropy(A2, y, condition):
         return gradCE
 
 
-def backwardPass(X, y, weights, cache):
-    m = X.shape[0]
-
-    emb = cache['emb']
-    Z1 = cache['Z1']
-    A1 = cache['A1']
-    Z2 = cache['Z2']
-    A2 = cache['A2']
-
-    dZ2 = crossEntropy(A2, y, 'gradient')
-    dW2 = (1 / m) * (np.dot(A1.T, dZ2))
-    db2 = (1 / m) * np.sum(dZ2, axis=0, keepdims=True)
-
-    dZ1 = (np.dot(dZ2, weights['W2'].T)) * sigmoid(Z1, 'gradient')
-    dW1 = (1 / m) * np.dot(emb.T, dZ1)
-    db1 = (1 / m) * np.sum(dZ1, axis=0, keepdims=True)
-
-    demb = (np.dot(dZ1, weights['W1'].T))
-    dWE = (1 / m) * np.dot(X.T, demb)
-
-    grads = {'dWE': dWE,
-             'dW1': dW1,
-             'db1': db1,
-             'dW2': dW2,
-             'db2': db2}
-    return grads
+def backwardPassCell():
+    pass
 
 
-def updateParameters(weights, prevWeights, J_grad, learningRate, momentumRate):
-    prevWeights['dWE_prev'] = learningRate * J_grad['dWE'] + momentumRate * prevWeights['dWE_prev']
-    prevWeights['dW1_prev'] = learningRate * J_grad['dW1'] + momentumRate * prevWeights['dW1_prev']
-    prevWeights['dW2_prev'] = learningRate * J_grad['dW2'] + momentumRate * prevWeights['dW2_prev']
-    prevWeights['db1_prev'] = learningRate * J_grad['db1'] + momentumRate * prevWeights['db1_prev']
-    prevWeights['db2_prev'] = learningRate * J_grad['db2'] + momentumRate * prevWeights['db2_prev']
-
-    weights['WE'] -= prevWeights['dWE_prev']
-    weights['W1'] -= prevWeights['dW1_prev']
-    weights['W2'] -= prevWeights['dW2_prev']
-    weights['b1'] -= prevWeights['db1_prev']
-    weights['b2'] -= prevWeights['db2_prev']
-
-    return weights, prevWeights
+def backwardPass():
+    pass
 
 
-def getAccuracy(y_true, y_pred):
-    accuracyBool = (y_true.ravel() == y_pred.ravel())
-    accuracy = np.count_nonzero(accuracyBool) / accuracyBool.shape[0]
-    return accuracy
-
-
-class NLP:
+class RNN:
     def __init__(self, parameters, layerSizes):
         self.batchSize = parameters['batchSize']
         self.learningRate = parameters['learningRate']
@@ -138,8 +118,13 @@ class NLP:
 
     def fit(self, X_train, y_train, X_val, y_val, layerSizes):
         self.weights = initializeWeights(layerSizes)
+        A1_0 = np.zeros((1, layerSizes['hiddenSize']))
+        hiddenUnits, outputUnits, caches = forwardPass(X_train, A1_0, self.weights, layerSizes)
+        J = crossEntropy(caches['y'], y_train, 'loss')
+        print(J)
 
-        m = layerSizes['sampleSize']
+        """
+        m = layerSizes['inputSize']
         if m % self.batchSize == 0:
             iterationNo = m // self.batchSize
         else:
@@ -185,10 +170,5 @@ class NLP:
             if np.abs(J_train - J_val) > self.threshold:
                 print('Finish training!!!')
                 break
-        return train_acc, val_acc
+        return train_acc, val_acc"""
 
-    def predict(self, X):
-        cache = forwardPass(X, self.weights)
-        y_pred = cache['A2']
-        pred_index = np.argmax(y_pred, axis=1)
-        return y_pred, pred_index
