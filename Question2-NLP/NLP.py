@@ -144,9 +144,9 @@ class NLP:
         else:
             iterationNo = m // self.batchSize + 1
 
+        train_acc = []
+        val_acc = []
         for epoch in range(self.epochNo):
-            train_acc = []
-            val_acc = []
             for batch in range(iterationNo):
                 startIdx = batch * self.batchSize
                 endIdx = startIdx + self.batchSize
@@ -160,25 +160,26 @@ class NLP:
                 J_grad = backwardPass(X_batch, y_batch, self.weights, cache)
                 self.weights, self.prevWeights = updateParameters(self.weights, self.prevWeights, J_grad,
                                                                   self.learningRate, self.momentumRate)
-            print('Epoch', epoch, 'finished ==================>')
+            print('\n=========================== Epoch', epoch, 'finished ============================')
 
             y_pred, pred_index = self.predict(X_train)
             J_train = crossEntropy(y_pred, y_train, 'loss')
-            print('Training loss for epoch', epoch, 'is:', J_train)
             true_index = np.argmax(y_train, axis=1)
             train_accuracy = getAccuracy(true_index, pred_index)
             train_acc.append(train_accuracy)
-            print('Train accuracy is', train_accuracy)
 
             y_pred, pred_index = self.predict(X_val)
             J_val = crossEntropy(y_pred, y_val, 'loss')
-            print('Validation loss for epoch', epoch, 'is:', J_val)
             true_index = np.argmax(y_val, axis=1)
             val_accuracy = getAccuracy(true_index, pred_index)
             val_acc.append(val_accuracy)
-            print('Validation accuracy is', val_accuracy)
 
+            print('Training loss for epoch', epoch, 'is:', J_train)
+            print('Validation loss for epoch', epoch, 'is:', J_val)
+            print('Train accuracy is', train_accuracy)
+            print('Validation accuracy is', val_accuracy)
             print('Difference between training and validation loss:', np.abs(J_train - J_val))
+            print('=========================================================================')
             if np.abs(J_train - J_val) > self.threshold:
                 print('Finish training!!!')
                 break

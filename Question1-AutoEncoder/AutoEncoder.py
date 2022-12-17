@@ -2,18 +2,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def initialization(Lpre, Lpost):
+def initialization(Lpre, Lpost, size):
     np.random.seed(0)  # TODO look for different seed values
     wo = np.sqrt(6 / (Lpre + Lpost))
-    parameter = np.random.uniform(-wo, wo, size=(Lpre, Lpost))
+    parameter = np.random.uniform(-wo, wo, size=size)
     return parameter
 
 
 def initializeWeights(inputSize, hiddenSize):
-    W1 = initialization(inputSize, hiddenSize)
+    W1 = initialization(inputSize, hiddenSize, (inputSize, hiddenSize))
     W2 = W1.T
-    b1 = initialization(1, hiddenSize)
-    b2 = initialization(1, inputSize)
+    b1 = initialization(inputSize, hiddenSize, (1, hiddenSize))
+    b2 = initialization(inputSize, hiddenSize, (1, inputSize))
     We = {'W1': W1,
           'W2': W2,
           'b1': b1,

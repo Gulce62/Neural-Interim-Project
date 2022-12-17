@@ -2,18 +2,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def initialization(Lpre, Lpost):
+def initialization(Lpre, Lpost, size):
     wo = np.sqrt(6 / (Lpre + Lpost))
-    parameter = np.random.uniform(-wo, wo, size=(Lpre, Lpost))
+    parameter = np.random.uniform(-wo, wo, size=size)
     return parameter
 
 
-def initializeWeights(layersizes):
-    W1 = initialization(layersizes['featureSize'], layersizes['hiddenSize'])
-    WR = initialization(layersizes['hiddenSize'], layersizes['hiddenSize'])
-    W2 = initialization(layersizes['hiddenSize'], layersizes['outputSize'])
-    b1 = initialization(1, layersizes['hiddenSize'])
-    b2 = initialization(1, layersizes['outputSize'])
+def initializeWeights(layerSizes):
+    featureSize = layerSizes['featureSize']
+    hiddenSize = layerSizes['hiddenSize']
+    outputSize = layerSizes['outputSize']
+    W1 = initialization(featureSize, hiddenSize, (featureSize, hiddenSize))
+    WR = initialization(hiddenSize, hiddenSize, (hiddenSize, hiddenSize))
+    W2 = initialization(hiddenSize, outputSize, (hiddenSize, outputSize))
+    b1 = initialization(featureSize, hiddenSize, (1, hiddenSize))
+    b2 = initialization(hiddenSize, outputSize, (1, outputSize))
     We = {'W1': W1,
           'W2': W2,
           'WR': WR,
@@ -37,98 +40,104 @@ def softmax(z):
     return sm
 
 
-
-def forwardPassCell(X_timeStep, A1_prev, weights):
+def forwardPassCell(currentTimeStep, A1_prev, weights):
     W1 = weights['W1']
     WR = weights['WR']
     W2 = weights['W2']
     b1 = weights['b1']
     b2 = weights['b2']
 
-    Z1_next = np.dot(X_timeStep, W1) + np.dot(A1_prev, WR) - b1
-    A1_next = tanh(Z1_next, 'forward')
-    Z2 = np.dot(A1_next, W2) - b2
-    A2 = softmax(Z2)
+    current_Z1 = np.dot(currentTimeStep, W1) + np.dot(A1_prev, WR) + b1
+    current_A1 = tanh(current_Z1, 'forward')
+    current_Z2 = np.dot(current_A1, W2) + b2
+    current_A2 = softmax(current_Z2)
 
-    cache = {'X_timeStep': X_timeStep,
-             'A1_next': A1_next,
-             'A2': A2}
-    return A1_next, Z2, cache
+    cache = {'currentTimeStep': currentTimeStep,
+             'A1_next': current_A1,
+             'A2': current_A2}
+    return cache
 
 
 def forwardPass(X, weights, layerSizes):
-    X_timeStep = dict()
-    A1_next = dict()
-    A2 = dict()
-    A1_prev = np.zeros((X.shape[0], layerSizes['hiddenSize']))
+    input_timeStep = {}
+    hidden_timeStep = {}
+    output_timeStep = {}
+
+    A1_prev = np.zeros((1, layerSizes['hiddenSize']))
     for timeStep in range(layerSizes['timeStepSize']):
-        currentTimeSample = X[:, timeStep, :]
-        A1_prev, Z2, cache = forwardPassCell(currentTimeSample, A1_prev, weights)
-        X_timeStep[timeStep] = cache['X_timeStep']
-        A1_next[timeStep] = cache['A1_next']
-        A2[timeStep] = cache['A2']
-    return X_timeStep, A1_next, A2
+        cache = forwardPassCell(X[:, timeStep, :], A1_prev, weights)
+
+        input_timeStep[timeStep] = cache['currentTimeStep']
+        hidden_timeStep[timeStep] = cache['A1_next']
+        output_timeStep[timeStep] = cache['A2']
+
+        A1_prev = cache['A1_next']
+
+    return input_timeStep, hidden_timeStep, output_timeStep
 
 
-def crossEntropy(A2, y):
-    m = A2.shape[0]
-    lossCE = -np.sum(y * np.log(A2)) / m
+def crossEntropyLoss(y_true, y_pred):
+    m = y_pred.shape[0]
+    lossCE = -np.sum(y_true * np.log(y_pred)) / m
     return lossCE
 
 
-def backwardPassCell(dA1, weights, X_timeStep, A1_next, A1_prev):
+def backwardPassCell(dA1, currentTimeStep, A1_next, A1_prev, weights):
     dZ1 = tanh(A1_next, 'gradient') * dA1
-    dW1 = np.dot(X_timeStep.T, dZ1)
+    dW1 = np.dot(currentTimeStep.T, dZ1)
     dWR = np.dot(A1_prev.T, dZ1)
-    dA1_prev = np.dot(dZ1, weights['WR'].T)
     db1 = np.sum(dZ1, axis=0, keepdims=True)
+    dA1_prev = np.dot(dZ1, weights['WR'].T)
 
     grad = {'dW1': dW1,
             'dWR': dWR,
-            'dA1_prev': dA1_prev,
-            'db1': db1}
+            'db1': db1,
+            'dA1_prev': dA1_prev}
     return grad
 
 
-def backwardPass(X, y, weights, caches, layerSizes):
-    sampleSize = X.shape[0]
+def backwardPass(y, cache, weights, layerSizes):
+    input_timeStep, hidden_timeStep, output_timeStep = cache
+
+    sampleSize = y.shape[0]
     timeStepSize = layerSizes['timeStepSize']
     featureSize = layerSizes['featureSize']
     hiddenSize = layerSizes['hiddenSize']
     outputSize = layerSizes['outputSize']
 
-    dW2 = np.zeros((hiddenSize, outputSize))
-    dWR = np.zeros((hiddenSize, hiddenSize))
     dW1 = np.zeros((featureSize, hiddenSize))
-    db2 = np.zeros((1, outputSize))
+    dWR = np.zeros((hiddenSize, hiddenSize))
+    dW2 = np.zeros((hiddenSize, outputSize))
     db1 = np.zeros((1, hiddenSize))
+    db2 = np.zeros((1, outputSize))
     dA1_prev = np.zeros((sampleSize, hiddenSize))
 
-    X_timeStep, A1_next, A2 = caches
+    dA2 = np.copy(output_timeStep[149])
+    length = len(y)
+    index = np.argmax(y, axis=1)
+    dA2[np.arange(length), index] -= 1
 
-    dA2 = A2[149]
-    dA2[np.arange(len(y)), np.argmax(y, 1)] -= 1
-
-    dW2 += np.dot(A1_next[149].T, dA2)
-    db2 += np.sum(dA2, axis=0, keepdims=True)
+    dW2 = np.dot(hidden_timeStep[149].T, dA2)
+    db2 = np.sum(dA2, axis=0, keepdims=True)
 
     for timeStep in reversed(range(1, timeStepSize)):
         dA1 = np.dot(dA2, weights['W2'].T) + dA1_prev
-        grads = backwardPassCell(dA1, weights, X_timeStep[timeStep], A1_next[timeStep], A1_next[timeStep-1])
+        grads = backwardPassCell(dA1, input_timeStep[timeStep], hidden_timeStep[timeStep],
+                                 hidden_timeStep[timeStep-1], weights)
         dW1 += grads['dW1']
         dWR += grads['dWR']
         db1 += grads['db1']
         dA1_prev = grads['dA1_prev']
 
-    for grad in [dW1, dWR, dW2, db1, db2]:
-        np.clip(grad, -10, 10, out=grad)
+    weightList = [dW1, db1, dWR, dW2, db2]
+    for weightDerivatives in weightList:
+        np.clip(weightDerivatives, -10, 10, out=weightDerivatives)
 
     J_grad = {'dW2': dW2,
               'db2': db2,
               'dW1': dW1,
               'dWR': dWR,
               'db1': db1}
-
     return J_grad
 
 
@@ -145,7 +154,8 @@ def updateParameters(weights, prevWeights, J_grad, learningRate, momentumRate):
     weights['b1'] -= prevWeights['db1_prev']
     weights['b2'] -= prevWeights['db2_prev']
 
-    return weights, prevWeights
+    learningRate *= 0.9999
+    return weights, prevWeights, learningRate
 
 
 def getAccuracy(y_true, y_pred):
@@ -170,19 +180,19 @@ class RNN:
                             'db1_prev': 0,
                             'db2_prev': 0}
 
-    def fit(self, X_train, y_train, X_val, y_val, layerSizes):
+    def fit(self, X_train, y_train, X_val, y_val):
         np.random.seed(150)
-        self.weights = initializeWeights(layerSizes)
+        self.weights = initializeWeights(self.layerSizes)
 
-        m = layerSizes['sampleSize']
+        m = self.layerSizes['sampleSize']
         if m % self.batchSize == 0:
             iterationNo = m // self.batchSize
         else:
             iterationNo = m // self.batchSize + 1
 
+        train_acc = []
+        val_acc = []
         for epoch in range(self.epochNo):
-            train_acc = []
-            val_acc = []
             for batch in range(iterationNo):
                 startIdx = batch * self.batchSize
                 endIdx = startIdx + self.batchSize
@@ -192,20 +202,37 @@ class RNN:
                 else:
                     X_batch = X_train[startIdx:endIdx]
                     y_batch = y_train[startIdx:endIdx]
-                caches = forwardPass(X_batch, self.weights, layerSizes)
-                J_grad = backwardPass(X_batch, y_batch, self.weights, caches, layerSizes)
-                self.weights, self.prevWeights = updateParameters(self.weights, self.prevWeights, J_grad,
-                                                                  self.learningRate, self.momentumRate)
+                cache = forwardPass(X_batch, self.weights, self.layerSizes)
+                J_grad = backwardPass(y_batch, cache, self.weights, self.layerSizes)
+                self.weights, self.prevWeights, self.learningRate = updateParameters(self.weights, self.prevWeights,
+                                                                                     J_grad, self.learningRate, self.momentumRate)
+            print('\n=========================== Epoch', epoch, 'finished ============================')
 
-            cross_loss_train = crossEntropy(caches[2][149], y_batch)
-            predictions_train = self.predict(X_train)
-            acc_train = getAccuracy(np.argmax(y_train, 1), predictions_train)
+            y_pred, pred_index = self.predict(X_train)
+            J_train = crossEntropyLoss(y_train, y_pred)
+            true_index = np.argmax(y_train, axis=1)
+            train_accuracy = getAccuracy(true_index, pred_index)
+            train_acc.append(train_accuracy)
 
-            print(f"[{epoch + 1}/{self.epochNo}] ------> Training :  Accuracy : {acc_train}")
-            print(f"[{epoch + 1}/{self.epochNo}] ------> Training :  Loss     : {cross_loss_train}")
-            print('______________________________________________________________________________________\n')
+            y_pred, pred_index = self.predict(X_val)
+            J_val = crossEntropyLoss(y_val, y_pred)
+            true_index = np.argmax(y_val, axis=1)
+            val_accuracy = getAccuracy(true_index, pred_index)
+            val_acc.append(val_accuracy)
+
+            print('Training loss for epoch', epoch, 'is:', J_train)
+            print('Validation loss for epoch', epoch, 'is:', J_val)
+            print('Train accuracy is', train_accuracy)
+            print('Validation accuracy is', val_accuracy)
+            print('Difference between training and validation loss:', np.abs(J_train - J_val))
+            print('=========================================================================')
+            if np.abs(J_train - J_val) > self.threshold:
+                print('Finish training!!!')
+                break
+        return train_acc, val_acc
 
     def predict(self, X):
-        _, _, A2 = forwardPass(X, self.weights, self.layerSizes)
-        y_predIndex = np.argmax(A2[149], axis=1)
-        return y_predIndex
+        cache = forwardPass(X, self.weights, self.layerSizes)
+        y_pred = cache[2][149]
+        y_predIndex = np.argmax(y_pred, axis=1)
+        return y_pred, y_predIndex

@@ -3,7 +3,7 @@ import sys
 import numpy as np
 import random
 import matplotlib.pyplot as plt
-import newRNN as rnn
+import LSTM as lstm
 
 
 def read_data(filePath):
@@ -33,10 +33,10 @@ print('The shape of test input is:', X_test.shape)
 print('The shape of train output is:', y_train.shape)
 print('The shape of test output is:', y_test.shape)
 
-parameters = {'batchSize': 16,
-              'learningRate': 1e-4,
-              'momentumRate': 0.0,
-              'epochNo': 25,
+parameters = {'batchSize': 32,
+              'learningRate': 5e-4,
+              'momentumRate': 0.1,
+              'epochNo': 50,
               'threshold': 15}
 
 layerSizes = {'sampleSize': X_train.shape[0],
@@ -46,8 +46,14 @@ layerSizes = {'sampleSize': X_train.shape[0],
               'outputSize': y_train.shape[1]}
 
 print(layerSizes)
-model = rnn.RNN(parameters, layerSizes)
-model.fit(X_train, y_train, X_test, y_test)
+model = lstm.RNN(parameters, layerSizes)
+train_acc, val_acc = model.fit(X_train, y_train, X_test, y_test)
 
-
+plt.figure()
+plt.title('Train accuracy')
+plt.plot(train_acc)
+plt.figure()
+plt.title('Validation accuracy')
+plt.plot(val_acc)
+plt.show()
 
