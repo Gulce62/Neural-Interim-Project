@@ -1,12 +1,11 @@
 import h5py
 import sys
+import random
 import numpy as np
 import matplotlib.pyplot as plt
 import NLP as nlp
 import OneHotEncoder as ohe
-import time
 
-t1 = time.time()
 def read_data(filePath):
     # Read the data with its path location
     try:
@@ -57,17 +56,16 @@ print('The shape of one-hot encoded test output is:', y_testOHE.shape, '\n')
 
 D = [32, 16, 8]
 P = [256, 128, 64]
-#D = [32]
-#P = [256]
 
 parameters = {'batchSize': 200,
               'learningRate': 0.15,
               'momentumRate': 0.85,
-              'epochNo': 50,
+              'epochNo': 10,
               'threshold': 0.1}
-
+"""
 for d in D:
     for p in P:
+        print('Start training for d = ' + str(d) + ' p = ' + str(p))
         layerSizes = {'featureSize': X_train.shape[1] * words.shape[0],
                       'sampleSize': X_train.shape[0],
                       'embedSize': d,
@@ -77,15 +75,28 @@ for d in D:
         nlpModel = nlp.NLP(parameters, layerSizes)
         train_acc, val_acc = nlpModel.fit(X_trainOHE, y_trainOHE, X_valOHE, y_valOHE, layerSizes)
         plt.figure()
-        plt.title('Train accuracy for d = '+str(d)+' p = '+str(p))
+        plt.title('Train accuracy for d = ' + str(d) + ' p = ' + str(p))
         plt.plot(train_acc)
         plt.figure()
         plt.title('Validation accuracy for d = ' + str(d) + ' p = ' + str(p))
         plt.plot(val_acc)
         plt.show()
+"""
+print('Start training for final values d = 32, p = 256')
+layerSizes = {'featureSize': X_train.shape[1] * words.shape[0],
+              'sampleSize': X_train.shape[0],
+              'embedSize': 32,
+              'hiddenSize': 256,
+              'outputSize': words.shape[0]}
 
-        t2 = time.time()
-        print(t2-t1)
+nlpModel = nlp.NLP(parameters, layerSizes)
+train_acc, val_acc = nlpModel.fit(X_trainOHE, y_trainOHE, X_valOHE, y_valOHE, layerSizes)
+y_pred, pred_index = nlpModel.predict(X_testOHE)
+true_index = np.argmax(y_testOHE, axis=1)
+test_accuracy = nlp.getAccuracy(true_index, pred_index)
+print('Test accuracy is:', test_accuracy)
 
-t3 = time.time()
-print(t3-t1)
+
+
+
+

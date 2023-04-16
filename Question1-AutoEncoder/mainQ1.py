@@ -37,7 +37,7 @@ imageData = imageData.reshape(shapeData[0], shapeData[1] * shapeData[2])
 print('The shape of the flattened image data is:', imageData.shape)
 
 Lhid = 64
-lambdaVal = 1e-5
+lambdaVal = 5e-4
 betaList = [1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1]
 rhoList = [1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1]
 epochNo = 3000
@@ -71,10 +71,12 @@ plt.title('Loss Value at Each Epoch')
 plt.xlabel('Epoch Number')
 plt.ylabel('Loss')
 plt.plot(J_list)
-modelAE.displayHiddenWeights()
+modelAE.displayHiddenWeights('Hidden Layer Features', 10)
+modelAE.reconstruct(imageData, imageNumber=15)
 
-LhidList = [10, 55, 100]
+LhidList = [10, 50, 100]
 lambdaValList = [1e-5, 1e-3, 0]
+epochNo = 1000
 
 for hidSize in LhidList:
     for lam in lambdaValList:
@@ -84,11 +86,7 @@ for hidSize in LhidList:
                       'rho': bestRho}
         modelAE = AE.AutoEncoder(We, parameters, epochNo, learningRate)
         We, J_list = modelAE.solver(imageData)
-        plt.figure()
-        plt.title('Loss Value at Each Epoch')
-        plt.xlabel('Epoch Number')
-        plt.ylabel('Loss')
-        plt.plot(J_list)
-        modelAE.displayHiddenWeights()
+        title = 'Hidden Layer Features for Lhid = ' + str(hidSize) + ' and for lambda = ' + str(lam)
+        modelAE.displayHiddenWeights(title, 10)
 
-modelAE.reconstruct(imageData, imageNumber=15)
+

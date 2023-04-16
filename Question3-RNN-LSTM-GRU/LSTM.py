@@ -285,7 +285,7 @@ def getAccuracy(y_true, y_pred):
     return accuracy
 
 
-class RNN:
+class LSTM:
     def __init__(self, parameters, layerSizes):
         self.batchSize = parameters['batchSize']
         self.learningRate = parameters['learningRate']

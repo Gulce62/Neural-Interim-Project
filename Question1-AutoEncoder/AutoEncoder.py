@@ -2,18 +2,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def initialization(Lpre, Lpost, size):
-    np.random.seed(0)  # TODO look for different seed values
+def initializationXavier(Lpre, Lpost, size):
+    np.random.seed(0)
     wo = np.sqrt(6 / (Lpre + Lpost))
     parameter = np.random.uniform(-wo, wo, size=size)
     return parameter
 
 
 def initializeWeights(inputSize, hiddenSize):
-    W1 = initialization(inputSize, hiddenSize, (inputSize, hiddenSize))
+    W1 = initializationXavier(inputSize, hiddenSize, (inputSize, hiddenSize))
     W2 = W1.T
-    b1 = initialization(inputSize, hiddenSize, (1, hiddenSize))
-    b2 = initialization(inputSize, hiddenSize, (1, inputSize))
+    b1 = initializationXavier(inputSize, hiddenSize, (1, hiddenSize))
+    b2 = initializationXavier(inputSize, hiddenSize, (1, inputSize))
     We = {'W1': W1,
           'W2': W2,
           'b1': b1,
@@ -156,12 +156,12 @@ class AutoEncoder:
             print('The cost at epoch =', str(epoch), 'is:', str(J))
         return self.We, J_list
 
-    def displayHiddenWeights(self):
+    def displayHiddenWeights(self, title, plotNo):
         W1 = self.We['W1']
         plt.figure(figsize=(9, 8))
-        plt.suptitle('Hidden Layer Features')
+        plt.suptitle(title)
         for w in range(W1.shape[1]):
-            plt.subplot(8, 8, w + 1)
+            plt.subplot(plotNo, plotNo, w + 1)
             plt.imshow(W1.T[w].reshape(16, 16), cmap='gray')
             plt.axis('off')
         plt.show()

@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d71309f-fb29-4645-a3ec-1571dac58819" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/LSTM.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3RNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Neural-Interim-Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Neural-Interim-Project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Question1-AutoEncoder/AutoEncoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question1-AutoEncoder/AutoEncoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Question2-NLP/NLP.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question2-NLP/NLP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Question1-AutoEncoder/mainQ1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question1-AutoEncoder/mainQ1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Question2-NLP/mainQ2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question2-NLP/mainQ2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/RNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/RNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3LSTM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/newRNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/newLSTM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3RNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3RNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/newRNN.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,27 +60,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/gulce/Desktop/EEE 8TH SEMESTER/EEE 443/Interim Project/Neural-Interim-Project/Question3-RNN-LSTM-GRU&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/gulce/Desktop/GÜLCE/EEE 8TH SEMESTER/EEE 443/Interim Project/Neural-Interim-Project",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\gulce\Desktop\EEE 8TH SEMESTER\EEE 443\Interim Project\Neural-Interim-Project\Question3-RNN-LSTM-GRU" />
       <recent name="C:\Users\gulce\Desktop\EEE 8TH SEMESTER\EEE 443\Interim Project\Neural-Interim-Project\Question2-NLP" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\gulce\Desktop\GÜLCE\EEE 8TH SEMESTER\EEE 443\Interim Project\Neural-Interim-Project" />
       <recent name="C:\Users\gulce\Desktop\EEE 8TH SEMESTER\EEE 443\Interim Project\Neural-Interim-Project\Question2-NLP" />
       <recent name="C:\Users\gulce\Desktop\EEE 8TH SEMESTER\EEE 443\Interim Project\Neural-Interim-Project\Question2-NLP\extra" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.mainQ3LSTM">
+  <component name="RunManager" selected="Python.mainQ2">
     <configuration name="extra" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Neural-Interim-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -87,12 +91,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Question2-NLP" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/extra.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Question2-NLP/extra.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -101,7 +105,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="mainQ1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="gulce_erdogan_21802781_miniProject" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Neural-Interim-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -109,13 +113,13 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Question1-AutoEncoder" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Datasets" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Question1-AutoEncoder/mainQ1.py" />
-      <option name="PARAMETERS" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Datasets/gulce_erdogan_21802781_miniProject.py" />
+      <option name="PARAMETERS" value="1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -123,7 +127,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="mainQ3LSTM" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="mainQ2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Neural-Interim-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -131,12 +135,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Question2-NLP" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3LSTM.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Question2-NLP/mainQ2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -145,29 +149,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="mainQ3RNN" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Neural-Interim-Project" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\gulce\Desktop\EEE 8TH SEMESTER\EEE 443\Interim Project\Neural-Interim-Project\Question3-RNN-LSTM-GRU\mainQ3RNN.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="newLSTM" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="mainQ3RNN (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Neural-Interim-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -180,8 +162,30 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\gulce\Desktop\EEE 8TH SEMESTER\EEE 443\Interim Project\Neural-Interim-Project\Question3-RNN-LSTM-GRU\newLSTM.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3RNN.py" />
       <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="name_surname_idNumber_hw_" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Neural-Interim-Project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\gulce\anaconda3\envs\Neural-Interim-Project\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../.." />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../../name_surname_idNumber_hw_.py" />
+      <option name="PARAMETERS" value="1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -191,10 +195,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.mainQ3LSTM" />
-        <item itemvalue="Python.mainQ3RNN" />
-        <item itemvalue="Python.mainQ1" />
-        <item itemvalue="Python.newLSTM" />
+        <item itemvalue="Python.mainQ2" />
+        <item itemvalue="Python.gulce_erdogan_21802781_miniProject" />
+        <item itemvalue="Python.mainQ3RNN (1)" />
+        <item itemvalue="Python.name_surname_idNumber_hw_" />
         <item itemvalue="Python.extra" />
       </list>
     </recent_temporary>
@@ -231,7 +235,12 @@
       <workItem from="1671183125624" duration="1093000" />
       <workItem from="1671194107435" duration="7912000" />
       <workItem from="1671203678480" duration="16572000" />
-      <workItem from="1671264331443" duration="16165000" />
+      <workItem from="1671264331443" duration="39058000" />
+      <workItem from="1671352537511" duration="195000" />
+      <workItem from="1671370601772" duration="170000" />
+      <workItem from="1671374552813" duration="85000" />
+      <workItem from="1671551698905" duration="21000" />
+      <workItem from="1681647333617" duration="323000" />
     </task>
     <servers />
   </component>
@@ -249,23 +258,15 @@
       </map>
     </option>
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Question3-RNN-LSTM-GRU/mainQ3LSTM.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ3.coverage" NAME="mainQ3RNN Coverage Results" MODIFIED="1671275187125" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
-    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ1.coverage" NAME="mainQ1 Coverage Results" MODIFIED="1671270057395" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question1-AutoEncoder" />
-    <SUITE FILE_PATH="coverage/Neural_Interim_Project$extra.coverage" NAME="extra Coverage Results" MODIFIED="1671108772024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ2.coverage" NAME="mainQ2 Coverage Results" MODIFIED="1671310229184" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question2-NLP" />
     <SUITE FILE_PATH="coverage/Neural_Interim_Project$newRNN.coverage" NAME="newRNN Coverage Results" MODIFIED="1671269082567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
     <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ3LSTM.coverage" NAME="mainQ3LSTM Coverage Results" MODIFIED="1671282555762" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
-    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ2.coverage" NAME="mainQ2 Coverage Results" MODIFIED="1671107524005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question2-NLP" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ3RNN__1_.coverage" NAME="mainQ3RNN (1) Coverage Results" MODIFIED="1671308658523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$gulce_erdogan_21802781_miniProject.coverage" NAME="gulce_erdogan_21802781_miniProject Coverage Results" MODIFIED="1671309365477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Datasets" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ3.coverage" NAME="mainQ3RNN Coverage Results" MODIFIED="1671275187125" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question3-RNN-LSTM-GRU" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$mainQ1.coverage" NAME="mainQ1 Coverage Results" MODIFIED="1671295050055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question1-AutoEncoder" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$extra.coverage" NAME="extra Coverage Results" MODIFIED="1671297872086" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Question2-NLP" />
+    <SUITE FILE_PATH="coverage/Neural_Interim_Project$name_surname_idNumber_hw_.coverage" NAME="name_surname_idNumber_hw_ Coverage Results" MODIFIED="1671308363297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../.." />
   </component>
 </project>

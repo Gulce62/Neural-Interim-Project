@@ -46,7 +46,7 @@ layerSizes = {'sampleSize': X_train.shape[0],
               'outputSize': y_train.shape[1]}
 
 print(layerSizes)
-model = lstm.RNN(parameters, layerSizes)
+model = lstm.LSTM(parameters, layerSizes)
 train_acc, val_acc = model.fit(X_train, y_train, X_test, y_test)
 
 plt.figure()

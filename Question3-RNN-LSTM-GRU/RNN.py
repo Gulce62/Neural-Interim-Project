@@ -117,8 +117,8 @@ def backwardPass(y, cache, weights, layerSizes):
     index = np.argmax(y, axis=1)
     dA2[np.arange(length), index] -= 1
 
-    dW2 = np.dot(hidden_timeStep[149].T, dA2)
-    db2 = np.sum(dA2, axis=0, keepdims=True)
+    dW2 += np.dot(hidden_timeStep[149].T, dA2)
+    db2 += np.sum(dA2, axis=0, keepdims=True)
 
     for timeStep in reversed(range(1, timeStepSize)):
         dA1 = np.dot(dA2, weights['W2'].T) + dA1_prev
@@ -226,7 +226,7 @@ class RNN:
             print('Validation accuracy is', val_accuracy)
             print('Difference between training and validation loss:', np.abs(J_train - J_val))
             print('=========================================================================')
-            if np.abs(J_train - J_val) > self.threshold:
+            if np.abs(J_train - J_val) > self.threshold or epoch == 21:
                 print('Finish training!!!')
                 break
         return train_acc, val_acc
